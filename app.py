@@ -12,7 +12,18 @@ debug = DebugToolbarExtension(app)
 @app.get('/')
 def load_silly_story_form():
     """return the madlibs homepage with the story form"""
-    breakpoint()
+
     prompts = silly_story.prompts
-# define prompts here, pass in render_template
-    return render_template("questions.html", prompts=silly_story.prompts)
+
+    return render_template("questions.html", prompts=prompts)
+
+
+@app.get('/results')
+def load_story_results():
+    """returns the completed story with prompts filled into template"""
+
+    completed_story = silly_story.generate(request.args)
+   
+    return render_template("story.html", completed_story=completed_story)
+
+   
